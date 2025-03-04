@@ -121,6 +121,12 @@ public class InstallerInput
                 "");
             foreach (var inst in installerInput.GetAll())
             {
+                if (installerInput.GetAll().Count() == 0)
+                {
+                    Console.WriteLine("Brak instalatorów w bazie");
+                    break;
+                }
+              
                 Console.ForegroundColor= ConsoleColor.Blue;
                 Console.WriteLine($"{inst.ToString3()}");
                 Console.ForegroundColor = ConsoleColor.White;

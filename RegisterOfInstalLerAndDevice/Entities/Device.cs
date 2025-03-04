@@ -14,9 +14,13 @@ public class Device : EntityBase
     {
         StringBuilder sB = new StringBuilder(1024);
         sB.AppendLine($"ID: {Id}.             TYP: {Product}");
+        return sB.ToString();
+    }
+    public string ToString3()
+    {
+        StringBuilder sB = new StringBuilder(1024);
         sB.AppendLine($"                       SN: {SN}.          Data Wprowadzenia:{CurrentDate}");
-        sB.AppendLine($"        Data uruchomienia: {LunchDate}. Firma uruchamiająca: {CompanyName}");
-
+        sB.AppendLine($"        Data uruchomienia: {LunchDate}.      Firma uruchamiająca: {CompanyName}");
         return sB.ToString();
     }
 }

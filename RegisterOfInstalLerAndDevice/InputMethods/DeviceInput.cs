@@ -106,9 +106,20 @@ public class DeviceInput
 
         void DeviceList()
         {
-            foreach (var inst in device.GetAll())
+            Console.Clear();
+            Console.WriteLine("Lista zarejestrowanych urządzeń \n");
+            foreach (var dev in device.GetAll())
             {
-                Console.WriteLine(inst.ToString2());
+                if (device.GetAll().Count() == 0)
+                {
+                    Console.WriteLine("Brak urządzeń w bazie");
+                    break;
+                }
+     
+                Console.ForegroundColor = ConsoleColor.Blue;
+                Console.WriteLine(dev.ToString2());
+                Console.ForegroundColor = ConsoleColor.White;
+                Console.WriteLine(dev.ToString3());
             }
             Console.ReadLine();
         }
