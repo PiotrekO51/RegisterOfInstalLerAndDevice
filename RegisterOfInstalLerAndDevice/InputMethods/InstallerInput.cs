@@ -4,11 +4,11 @@ using RegisterOfInstalLerAndDevice.Repositories;
 
 namespace RegisterOfInstalLerAndDevice.InputMethods;
 
-public class Input
+public class InstallerInput
 {
    
     public const string filename = "InstallersList.txt";
-    public Input()
+    public InstallerInput()
     {
 
     }

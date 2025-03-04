@@ -12,7 +12,7 @@ internal class Program()
         Console.ForegroundColor = ConsoleColor.Red;
         Console.WriteLine("WITAMY W PROGRAME REJESTRACJI INSTALATORÓW I URZĄDZEŃ \n ");
         Thread.Sleep(1000);
-        var dataInput = new Input();
+        var dataInput = new InstallerInput();
         var deviceInput = new DeviceInput();
         var fileMethod = new FileMethods();
         bool Close = true;
