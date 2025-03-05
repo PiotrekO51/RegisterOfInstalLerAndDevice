@@ -4,8 +4,8 @@ using RegisterOfInstalLerAndDevice.Entities;
 namespace RegisterOfInstalLerAndDevice.Data;
 public  class RegisterDbContext: DbContext
 {
-    public DbSet<Device> Device => Set<Device>();
-    public DbSet<Installer> Installer => Set<Installer>();
+    public DbSet<Device> Devices => Set<Device>();
+    public DbSet<Installer> Installers => Set<Installer>();
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
