@@ -7,7 +7,6 @@ namespace RegisterOfInstalLerAndDevice.InputMethods;
 public class FileMethods : Installer
 {
     public const string filename = "InstallersList.txt";
-    //public List<string> installer = 
     public FileMethods()
     {
     }
@@ -38,7 +37,6 @@ public class FileMethods : Installer
     {
         foreach (var t in txt)
         {
-
             string[] pol = t.Split(',');
             {
                 string p1 = pol[0];
@@ -84,7 +82,6 @@ public class FileMethods : Installer
         else { Console.WriteLine("Plik Nie istnieje"); }
         return list;
     }
-
 
     public void WriteFileToConsole()
     {

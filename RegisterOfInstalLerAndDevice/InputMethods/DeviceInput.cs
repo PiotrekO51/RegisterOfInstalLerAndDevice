@@ -12,14 +12,9 @@ public class DeviceInput
 {
     public const string filenameInstaller = "InstallersList.txt";
     public const string filenameDevice = "DeviceList.txt";
-    List<string> deviceList = new();
+
     public DeviceInput()
     { }
-
-    void AddDeviceList(string device)
-    {
-        deviceList.Add(device);
-    }
 
     public void GetDevice()
     {
@@ -41,14 +36,14 @@ public class DeviceInput
                         string p3 = pole[2];
                         string p4 = pole[3];
                         string p5 = pole[4];
-                        device.Add(new Device { Product = p1, SN = p2, CurrentDate = p3, LunchDate = p4, CompanyName = p5, } );
+                        device.Add(new Device { Product = p1, SN = p2, CurrentDate = p3, LunchDate = p4, CompanyName = p5, });
                         device.Save();
                         line = reader.ReadLine();
                     }
                 }
             }
         }
-    
+
 
         bool Down = true;
         while (Down)
@@ -60,7 +55,7 @@ public class DeviceInput
             Console.WriteLine("Wybierz nr ID czynności lub wciśnij x w celu wyjścia\n" +
                 "1: Rejestracja uruchomionego produktu\n" +
                 "2: Lista zarejestrowanych urządzeń\n" +
-                "X: Wyjście z funkcji rejestracji\n" +
+                "X: Powrót do MENU głównegp\n" +
                 " ");
             string input = Console.ReadLine();
             switch (input)
@@ -76,38 +71,51 @@ public class DeviceInput
                     Down = false;
                     break;
             }
-           
+
         }
         void AddedDevice()
         {
+            List<string> deviceList = new();
             while (true)
             {
+                Console.Clear();
                 string id = ProductTypList("Podaj ID wyboru produktu lub x w celu wyjścia ");
                 if (id == "x")
                 { break; }
                 else
                 {
-                    int.TryParse(id, out int id2);
-                    Console.WriteLine((ProductType)id2 - 1);
-                    string sn = RegisterSn("Podaj numer seryjny SN;");
-                    string dateTime = DateTime.Now.ToString();
-                    string registrationDate = RegisterDate("Podaj datę uruchomienia YYYY,MM,DD");
-                    string companyName = CompanyNameAdded("Wybierz ID: firmy uruchamiającej");
-                    string productType = ((ProductType)id2 - 1).ToString();
-                    device.Add(new Device { Product = ((ProductType)id2 - 1).ToString(), SN = sn, CurrentDate = dateTime, LunchDate = registrationDate, CompanyName = companyName, });
-                    device.Save();
-                    AddDeviceList($"{productType},{sn},{dateTime},{registrationDate},{companyName}");
-                    Console.ReadLine();
+                    if (int.TryParse(id, out int id2))
+                    {
+                        if (id2 >= 1 && id2 <= Enum.GetValues(typeof(ProductType)).Length)
+                        {
+                            Console.WriteLine((ProductType)id2 - 1);
+                            string sn = RegisterSn("Podaj numer seryjny SN;");
+                            string dateTime = DateTime.Now.ToString();
+                            string registrationDate = RegisterDate("Podaj datę uruchomienia YYYY,MM,DD");
+                            string companyName = CompanyNameAdded("Wybierz ID: firmy uruchamiającej");
+                            string productType = ((ProductType)id2 - 1).ToString();
+                            device.Add(new Device { Product = ((ProductType)id2 - 1).ToString(), SN = sn, CurrentDate = dateTime, LunchDate = registrationDate, CompanyName = companyName, });
+                            device.Save();
+                            AddDeviceList($"{productType},{sn},{dateTime},{registrationDate},{companyName}");
+                        }
+                        else { Console.WriteLine("Nie poprawne ID:"); Thread.Sleep(1000); }
+                    }
                 }
             }
-
             Console.Clear();
+            var instal = new FileMethods();
+            instal.SaveToFile3(deviceList, filenameDevice);
+            void AddDeviceList(string device)
+            {
+                deviceList.Add(device);
+            }
         }
 
         void DeviceList()
         {
             Console.Clear();
-            Console.WriteLine("Lista zarejestrowanych urządzeń \n");
+            Console.WriteLine("Lista zarejestrowanych urządzeń \n" +
+                "");
             foreach (var dev in device.GetAll())
             {
                 if (device.GetAll().Count() == 0)
@@ -115,7 +123,7 @@ public class DeviceInput
                     Console.WriteLine("Brak urządzeń w bazie");
                     break;
                 }
-     
+
                 Console.ForegroundColor = ConsoleColor.Blue;
                 Console.WriteLine(dev.ToString2());
                 Console.ForegroundColor = ConsoleColor.White;
@@ -198,30 +206,10 @@ public class DeviceInput
             Console.WriteLine(txt);
             string idName = Console.ReadLine();
             if (int.TryParse(idName, out int id))
-                { int id2 = id; }
+            { int id2 = id; }
 
             companyName = list[id - 1];
             return companyName;
         }
-
-        SaveToFile();
-    }
-
-    public void SaveToFile()
-    {
-        Console.Clear();
-        var instal = new FileMethods();
-        instal.SaveToFile3(deviceList, filenameDevice);
-    }
-
-    void EntryDeviceData()
-    {
-
-    }
-
-    void WritingDeviceDataFile()
-    {
-
-
     }
 }

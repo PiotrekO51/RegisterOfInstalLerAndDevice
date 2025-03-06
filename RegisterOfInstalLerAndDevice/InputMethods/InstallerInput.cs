@@ -6,17 +6,16 @@ namespace RegisterOfInstalLerAndDevice.InputMethods;
 
 public class InstallerInput
 {
-   
     public const string filename = "InstallersList.txt";
     public InstallerInput()
     {
 
     }
-    List<string> installerList = new();
-    void AddInstaler(string lista)
-    {
-        installerList.Add(lista);
-    }
+    //List<string> installerList = new();
+    //void AddInstaler(string lista)
+    //{
+    //    installerList.Add(lista);
+    //}
 
     bool Close = true;
     public void InstallerOperation()
@@ -68,7 +67,7 @@ public class InstallerInput
                 "\n" +
                 "1 - Wprowadzanie instalatorów\n" +
                 "2 - Lista Instalatorów\n" +
-                "x - WYJSCIE Z PROGRAMU\n" +
+                "x - Powrót do MENU głównegp\n" +
                 "");
 
             string input = Console.ReadLine();
@@ -83,13 +82,13 @@ public class InstallerInput
                 case "x":
                     Close = false;
                     break;
-            }
-            
+            }  
         }
 
         void AddingInstallers()
         {
-
+            List<string> installerList = new();
+           
             while (true)
             {
                 Console.WriteLine("Postępuj zgodnie z pytaniami lub wciśnij x w celu wyjscia \n" +
@@ -108,11 +107,16 @@ public class InstallerInput
                 installerInput.Add(new Installer { CompanyName = companyName, Name = name, SurName = surName, City = city, ZipCode = zip, Premisions = premision });
                 installerInput.Save();
                 AddInstaler($"{companyName},{name},{surName},{city},{zip},{premision}");
-               
                 Console.Clear();
-
             }
             Console.Clear();
+            void AddInstaler(string lista)
+            {
+                installerList.Add(lista);
+            }
+            Console.Clear();
+            var instal = new FileMethods();
+            instal.SaveToFile2(installerList, filename);
         }
         void ListInstallers1()
         {
@@ -133,19 +137,9 @@ public class InstallerInput
                 Console.WriteLine($"{inst.ToString4()}");
             }
             Console.ReadLine();
-
         }
-
-        SaveToFile();
     }
-    
-    public void SaveToFile()
-    {
-        Console.Clear();
-        var instal = new FileMethods();
-        instal.SaveToFile2(installerList, filename);
-    }
-
+        
     public void InputDeviceData()
     {
         Console.ReadLine();
@@ -164,8 +158,6 @@ public class InstallerInput
             val2 = val.ToUpper();
         }
         else { string val3 = char.ToUpper(val[0]) + val.Substring(1); val2 = val3; }
-
         return val2;
     }
-
 }
