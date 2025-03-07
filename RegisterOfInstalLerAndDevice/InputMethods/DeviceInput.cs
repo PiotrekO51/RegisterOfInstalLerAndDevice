@@ -18,7 +18,16 @@ public class DeviceInput
 
     public void GetDevice()
     {
-        var device = new SqlRepositories<Device>(new RegisterDbContext());
+        //var itemAdded = new ItemAdded<Device>(EmployeeAdded);
+        var device = new SqlRepositories<Device>(new RegisterDbContext());//itemAdded);
+        device.ItemAdded += EmployeeAdded;
+
+        void EmployeeAdded(object? item, Device e)
+        {
+            Console.Clear();
+            Console.WriteLine($"Dodano nowe urządzenie => {e.Product}  {item.GetType().Name}");
+            Thread.Sleep(750);
+        }
 
         int deviceCount = device.GetAll().Count();
         if (deviceCount == 0)
@@ -43,7 +52,6 @@ public class DeviceInput
                 }
             }
         }
-
 
         bool Down = true;
         while (Down)

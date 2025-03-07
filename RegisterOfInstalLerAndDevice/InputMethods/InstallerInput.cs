@@ -1,6 +1,7 @@
 ﻿using RegisterOfInstalLerAndDevice.Data;
 using RegisterOfInstalLerAndDevice.Entities;
 using RegisterOfInstalLerAndDevice.Repositories;
+using System.Security;
 
 namespace RegisterOfInstalLerAndDevice.InputMethods;
 
@@ -20,9 +21,17 @@ public class InstallerInput
     bool Close = true;
     public void InstallerOperation()
     {
-        var installerInput = new SqlRepositories<Installer>(new RegisterDbContext());
+        var itemAdded = new ItemAdded<Installer>(EmployeeAdded);
+        var installerInput = new SqlRepositories<Installer>(new RegisterDbContext(), itemAdded);
         //var lista = new FileMethods();
 
+        void EmployeeAdded(object item)
+        {
+            var itemAdded = (Installer)item;
+            Console.Clear();
+            Console.WriteLine($"Dodano nowego instalatora {itemAdded.CompanyName}");
+            Thread.Sleep(10);
+        }
         int cont = installerInput.GetAll().Count();
 
         if ( cont == 0 )
